@@ -2,7 +2,7 @@
 const sequelize = require('./config/db');
 require('dotenv').config();
 const express = require('express')
- 
+ const cors = require('cors');
 const userRoutes = require('./routes/userRoutes')
 const contactRoutes = require('./routes/contactRouter')
 const authRoutes = require('./routes/authRoutes')
@@ -19,7 +19,7 @@ const PORT = process.env.PORT;
 sequelize.authenticate()
   .then(() => {
     console.log('servidor online e conectado com o DB')
-    return sequelize.sync();
+    return sequelize.sync();                                                                                                                                                                                                                                                                                                                       
   })
   .then(() =>{
     console.log('banco de dados sincronizado')
