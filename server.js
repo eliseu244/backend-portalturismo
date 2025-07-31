@@ -20,11 +20,7 @@ const app = express();
 
 // Configura o middleware CORS para aceitar requisições do frontend (localhost:5173)
 // Permite os métodos GET, POST, PUT, DELETE e aceita credenciais (cookies, auth headers)
-app.use(cors({                            
-  origin: 'http://localhost:5173',         
-  methods: ['GET','POST','PUT','DELETE'],
-  credentials: true
-}));  
+app.use(cors());  
 
 // Middleware que transforma o corpo das requisições com JSON em objeto JavaScript acessível via req.body
 app.use(express.json());
