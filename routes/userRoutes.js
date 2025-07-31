@@ -1,21 +1,22 @@
 const express = require('express');
 const router = express.Router();
- 
-const user = require('../controllers/userController')
- 
+const bcrypt = require('bcryptjs');
+const userController = require('../controllers/userController')
+
+
 // ✅ Criar usuário (registro) — público
-router.post('/', user.createUser);
- 
+router.post('/', userController.createUser);
+
 // ✅ Listar todos os usuários
-router.get('/', user.listUser);
- 
+router.get('/', userController.listUser);
+
 // ✅ Buscar usuário por ID
-router.get('/:id', user.listUserByTd);
- 
+router.get('/:id', userController.listUserById);
+
 // ✅ Atualizar usuário
-router.put('/:id', user.updateUser);
- 
+router.put('/:id', userController.updateUser);
+
 // ✅ Deletar usuário
-router.delete('/:id', user.deleteUser);
- 
+router.delete('/:id', userController.deleteUser);
+
 module.exports = router;

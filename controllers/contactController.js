@@ -1,50 +1,35 @@
+// Importa o modelo Contact que representa a tabela de contatos no banco de dados
 const Contact = require('../models/contact');
 
-exports.createContact = async (req, res) => {
+// Função para criar e listar todos os contatos (aparentemente o nome e funcionalidade estão trocados)
+exports.createContact = async (_req, res) => {
     try {
-      const { name, email, message } = req.body;
-   
-      // Verifica se todos os campos obrigatórios foram preenchidos
-      if (!name || !email || !message) {
-        return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
-      }
-   
-      // Cria o novo usuário
-      const newContact = await Contact.create({ name, email, message });
-   
-      // Retorna os dados sem a senha
-      const { id } = newContact;
-      res.status(201).json({ id, name, email , message});
-    } catch (error) {
-  
-      res.status(500).json({ message: 'Erro interno do servidor.' });
-    }
-  }
+        // Busca todos os contatos na tabela Contact, selecionando apenas alguns atributos
+        const contact = await Contact.findAll({
+            attributes: ['id', 'name', 'email', 'message', 'createdAt', 'updatedAt']
+        });
 
-  exports.listContact = async (_req, res) => {
+        // Retorna a lista de contatos como JSON na resposta
+        res.json(contact);
+    } catch (error) {
+        // Em caso de erro interno, retorna status 500 e mensagem de erro, incluindo o erro para debug
+        res.status(500).json({ message: 'Erro interno do servidor.', error });
+    }
+}
+
+// Função para listar contatos ordenados pela data de criação decrescente
+exports.listContact = async (req, res) => {
     try {
-      const contact = await Contact.findAll({
-        attributes: ['id', 'name', 'email','message', 'createdAt', 'updatedAt']
-      });
-      res.json(contact);
-    } catch (error) {
-      res.status(500).json({ message: 'Erro interno do servidor.', error });
-    }
-  }
+        // Busca todos os contatos ordenados do mais recente para o mais antigo
+        const contacts = await Contact.findAll({ order: [['createdAt', 'DESC']] });
 
-
-  exports.listContactByID = async (req, res) => {
-    try {
-      const contact = await Contact.findByPk(req.params.id, {
-          attributes: ['id', 'name', 'email','message', 'createdAt', 'updatedAt']
-      });
-   
-      if (!contact) {
-        return res.status(404).json({ message: 'Usuário não encontrado.' });
-      }
-   
-      res.json(contact);
+        // Retorna os contatos encontrados em JSON
+        res.json(contacts);
     } catch (error) {
-      res.status(500).json({ message: 'Erro interno do servidor.', error });
+        // Registra o erro no console para debug
+        console.error('Erro ao listar contatos:', error);
+
+        // Retorna status 500 com mensagem genérica de erro interno
+        res.status(500).json({ message: 'Erro interno do servidor' });
     }
-  }
+}
