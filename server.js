@@ -24,8 +24,7 @@ app.use(cors({
   origin: 'https://frontend-portal-turismo-phi.vercel.app', // utilizar o link da vercel de vocês        
   methods: ['GET','POST','PUT','DELETE'],
   credentials: true
-}));
-Vite + React                                                                                                                                                        
+}));                                                                                                                                                       
  
 
 // Middleware que transforma o corpo das requisições com JSON em objeto JavaScript acessível via req.body
