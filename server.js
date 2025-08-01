@@ -20,7 +20,13 @@ const app = express();
 
 // Configura o middleware CORS para aceitar requisições do frontend (localhost:5173)
 // Permite os métodos GET, POST, PUT, DELETE e aceita credenciais (cookies, auth headers)
-app.use(cors());  
+app.use(cors({                            
+  origin: 'https://frontend-portal-turismo-phi.vercel.app', // utilizar o link da vercel de vocês        
+  methods: ['GET','POST','PUT','DELETE'],
+  credentials: true
+}));
+Vite + React                                                                                                                                                        
+ 
 
 // Middleware que transforma o corpo das requisições com JSON em objeto JavaScript acessível via req.body
 app.use(express.json());
